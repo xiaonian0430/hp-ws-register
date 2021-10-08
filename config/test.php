@@ -5,8 +5,9 @@
  * @datetime: 2019-12-01 14:01
  */
 return [
-    'SERVER_NAME'    => 'RegisterCenter',
-    'MAIN_SERVER'    => [
+    'LAN_IP'=>'127.0.0.1',
+    'REGISTER'    => [
+        'SERVER_NAME'    => 'RegisterCenter',
         'LISTEN_ADDRESS' => '0.0.0.0',
         'PORT'           => 1236,
         'PROTOCOL'      => 'text'

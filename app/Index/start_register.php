@@ -8,11 +8,11 @@
 use \Workerman\Worker;
 use \GatewayWorker\Register;
 
-
-$confData = require_once SERVER_ROOT . '/config/'.GLOBAL_MODE.'.php';
+$conf = require_once SERVER_ROOT . '/config/'.GLOBAL_MODE.'.php';
+$address=$conf['REGISTER']['PROTOCOL'].'://'.$conf['REGISTER']['LISTEN_ADDRESS'].':'.$conf['REGISTER']['PORT'];
 
 // register 服务必须是text协议
-$register = new Register($confData['MAIN_SERVER']['PROTOCOL'].'://'.$confData['MAIN_SERVER']['LISTEN_ADDRESS'].':'.$confData['MAIN_SERVER']['PORT']);
+$register = new Register($address);
 
 // 如果不是在根目录启动，则运行runAll方法
 if(!defined('GLOBAL_START')) {
