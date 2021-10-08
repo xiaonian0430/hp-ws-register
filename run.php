@@ -26,10 +26,17 @@ if(!extension_loaded('posix')) {
 
 require_once SERVER_ROOT . '/core/autoload.php';
 
-var_dump($argv);
-$model='produce';
-defined('GLOBAL_MODEL') or define('GLOBAL_MODEL', $model);
-
+$mode='produce';
+foreach ($argv as $item){
+    $item_val=explode('=', $item);
+    if(count($item_val)==2 && $item_val[0]=='-mode'){
+        $mode=$item_val[1];
+    }
+}
+if (!file_exists(SERVER_ROOT . '/config/'.$mode.'.php')) {
+    exit('/config/'.$mode.".php not set\n");
+}
+defined('GLOBAL_MODE') or define('GLOBAL_MODE', $mode);
 // 加载所有app/*/start.php，以便启动所有服务
 foreach(glob(SERVER_ROOT.'/app/*/start*.php') as $start_file) {
     require_once $start_file;
