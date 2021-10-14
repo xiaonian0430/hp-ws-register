@@ -14,6 +14,7 @@
 - php v7.0 或更高版本
   - 安装 event 扩展
   - 安装 pcntl 和 posix 扩展
+  - 安装 redis 扩展
 
 ```
 # 1、安装event扩展依赖的libevent-devel包，命令行运行
