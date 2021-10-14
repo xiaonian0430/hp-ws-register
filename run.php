@@ -6,12 +6,11 @@
  * @datetime: 2021-09-14 10:00
  */
 use Workerman\Worker;
+use \GatewayWorker\Register;
 
+ini_set('display_errors', 'on');
 defined('IN_PHAR') or define('IN_PHAR', boolval(\Phar::running(false)));
 defined('SERVER_ROOT') or define('SERVER_ROOT', IN_PHAR ? \Phar::running() : realpath(getcwd()));
-// 标记是全局启动
-defined('GLOBAL_START') or define('GLOBAL_START', 1);
-ini_set('display_errors', 'on');
 
 // 检查扩展或环境
 if(strpos(strtolower(PHP_OS), 'win') === 0) {
@@ -24,6 +23,7 @@ if(!extension_loaded('posix')) {
     exit("Please install posix extension.\n");
 }
 
+//自动加载文件
 require_once SERVER_ROOT . '/core/autoload.php';
 
 $mode='produce';
@@ -34,13 +34,19 @@ foreach ($argv as $item){
     }
 }
 if (!file_exists(SERVER_ROOT . '/config/'.$mode.'.php')) {
+    $conf = require_once SERVER_ROOT . '/config/'.$mode.'.php';
+}else{
     exit('/config/'.$mode.".php not set\n");
 }
-defined('GLOBAL_MODE') or define('GLOBAL_MODE', $mode);
-// 加载所有app/*/start.php，以便启动所有服务
-foreach(glob(SERVER_ROOT.'/app/*/start*.php') as $start_file) {
-    require_once $start_file;
-}
+defined('CONFIG') or define('CONFIG', $conf);
+
+Worker::$stdoutFile = './tmp/log/error.log';
+Worker::$logFile = './tmp/log/workerman.log';
+
+$address=CONFIG['REGISTER']['PROTOCOL'].'://'.CONFIG['REGISTER']['LISTEN_ADDRESS'].':'.CONFIG['REGISTER']['PORT'];
+
+// register 服务必须是text协议
+$register = new Register($address);
 
 // 运行所有服务
 Worker::runAll();
