@@ -47,6 +47,7 @@ $address=CONFIG['REGISTER']['PROTOCOL'].'://'.CONFIG['REGISTER']['LISTEN_ADDRESS
 
 // register 服务必须是text协议
 $register = new Register($address);
+$register->name=CONFIG['REGISTER']['SERVER_NAME'];
 
 // 运行所有服务
 Worker::runAll();
