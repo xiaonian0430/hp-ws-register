@@ -53,7 +53,7 @@ if(!is_dir($temp_path)){
 Worker::$stdoutFile = $temp_path.'/error.log';
 Worker::$logFile = $temp_path.'/log.log';
 
-$address=CONFIG['REGISTER']['PROTOCOL'].'://'.CONFIG['REGISTER']['LISTEN_ADDRESS'].':'.CONFIG['REGISTER']['PORT'];
+$address='text://'.CONFIG['REGISTER']['LISTEN_ADDRESS'].':'.CONFIG['REGISTER']['PORT'];
 
 // register 服务必须是text协议
 $register = new Register($address);

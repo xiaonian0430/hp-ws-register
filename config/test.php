@@ -8,7 +8,6 @@ return [
     'REGISTER'    => [
         'SERVER_NAME'    => 'RegisterCenter',
         'LISTEN_ADDRESS' => '0.0.0.0',
-        'PORT'           => 1236,
-        'PROTOCOL'       => 'text'
-    ]
+        'PORT'           => 1236
+    ],
 ];
